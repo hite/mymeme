@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <script type="text/javascript">
+            /**
+             This example shows how to use YQL to
+             make queries to the GEO Web service.
+             The call to the YQL Web service uses
+             2-legged OAuth and is made with OpenSocial
+             functions.
+             */
+            // Creates query string by getting user input
+            // and joining URL-encoded name-value pairs with 
+            // an ampersand.
+            function makeQuery(){
+                var location = document.getElementById("query").value || "SFO";
+                var content = "";
+                var toQueryString = function(obj){
+                    var parts = [];
+                    for (var each in obj) 
+                        if (obj.hasOwnProperty(each)) {
+                            parts.push(encodeURIComponent(each) + '=' + encodeURIComponent(obj[each]));
+                        }
+                    return parts.join('&');
+                };
+                // Create function object that encloses OpenSocial 
+                // function makeRequest that makes call to YQL Web service.
+                var BASE_URI = 'http://query.yahooapis.com/v1/yql';
+                var runQuery = function(query, handler){
+                    gadgets.io.makeRequest(BASE_URI, handler, {
+                        METHOD: 'POST',
+                        POST_DATA: toQueryString({
+                            q: query,
+                            format: 'json'
+                        }),
+                        CONTENT_TYPE: 'JSON',
+                        AUTHORIZATION: 'OAuth'
+                    });
+                };
+                // Run YQL query to GeoPlanet API and extract data from response  
+                runQuery("select * from geo.places where text='" + location + "'", function(rsp){
+                    if (rsp.data) {
+                        var place = rsp.data.query.results.place;
+                        if (place[0]) {
+                            place = place[0];
+                        }
+                        var name = place.name || "Unknown";
+                        var country = place.country.content || place[0].country.content || "Unknown";
+                        var latitude = place.centroid.latitude || "Unknown";
+                        var longitude = place.centroid.longitude || "Unknown";
+                        var city = place.locality1.content || "Unknown";
+                        var state = place.admin1.content || "Unknown";
+                        var county = place.admin2.content || "Unknown";
+                        var zip = place.postal ? place.postal.content : "Unknown";
+                        
+                        // Create table w/ results	   
+                        content = "<table padding=\'5\'><tr><td><b>Place Name:<\/b><\/td>" + "<td>" + name + "<\/td><\/tr>";
+                        content += "<tr><td><b>City/Town:<\/b><\/td>" + "<td>" + city + "<\/td><\/tr>";
+                        content += "<tr><td><b>County/District:<\/b><\/td>" + "<td>" + county + "<\/td><\/td>";
+                        content += "<tr><td><b>State/Province:<\/b><\/td>" + "<td>" + state + "<\/td><\/tr>";
+                        content += "<tr><td><b>Zipcode:<\/b><\/td>" + "<td>" + zip + "<\/td><\/tr>";
+                        content += "<tr><td><b>Country:<\/b><\/td>" + "<td>" + country + "<\/td><\/tr>";
+                        content += "<tr><td><b>Latitude:<\/b><\/td>" + "<td>" + latitude + "<\/td><\/tr>";
+                        content += "<tr><td><b>Longitude:<\/b><\/td>" + "<td>" + longitude + "<\/td><\/tr><\/table>";
+                        document.getElementById('results').innerHTML = content;
+                    }
+                    else {
+                        document.getElementById('results').innerHTML = gadgets.json.stringify(rsp);
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        Enter Location: <input id='query' type='text'/>
+        <p>
+            <button id='make_query'>
+                Make Query
+            </button>
+        </p>
+        <script>
+            // Create an event handler for clicking on the button w/ id='make_query'
+            document.getElementById("make_query").addEventListener('click', makeQuery, false);
+        </script>
+        <p/>
+        <div id="results">
+        </div>
+    </body>
+</html>

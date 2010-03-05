@@ -1,0 +1,14 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>登录</title>
+		<script src="/js/service.js" type="text/javascript"></script>
+		<script src="/js/auth.js" type="text/javascript"></script>
+		<script src="/ext/mootools-1.2.4-core-nc.js" type="text/javascript"></script>
+		<link href="/css/meme.css" rel="stylesheet"/>
+	</head>
+	<body>
+		<input onclick="getReqToken();" value="test" type="button"/>
+	</body>
+</html>

@@ -1,0 +1,80 @@
+9
+
+dir
+5
+https://mymeme.googlecode.com/svn/trunk
+https://mymeme.googlecode.com/svn
+
+
+
+2009-12-10T10:39:34.491537Z
+5
+xiangheka
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+18a17132-e348-11de-9043-17b7bd24f792
+
+test
+dir
+
+ext
+dir
+
+.project
+file
+
+
+
+
+2009-11-15T22:48:52.036879Z
+db8bc797baa227d850526fa9bfec60a1
+2009-12-08T15:00:08.408153Z
+2
+xiangheka
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+210
+
+html
+dir
+
+css
+dir
+
+js
+dir
+
+.settings
+dir
+

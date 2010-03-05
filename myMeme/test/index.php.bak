@@ -1,0 +1,8 @@
+<?php
+$xml=rawurldecode('%3C%3Fxml%20version%3D%221.0%22%3F%3E');
+echo($xml);
+?>
+
+<?php echo '<?xml version="1.0" ?'.'>' ?>
+
+<?php echo "<?xml version=\"1.0\"\x3F>" ?> 

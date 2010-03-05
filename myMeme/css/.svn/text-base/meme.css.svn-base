@@ -1,0 +1,29 @@
+body {
+	background:#E3EBEF  repeat-x scroll 0 0
+}
+.author img {
+	border:0 none;
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	width:48px;
+	height:48px;
+	margin-left:-30px;
+}
+
+#posts,#userInfo {
+	margin-left:80px;
+	margin-right:80px;
+	background-color:#fff;
+}
+
+.post{
+	border-bottom:1px solid #E3EBEF;
+	display:block;
+	padding:20px 0;
+	width:790px;
+}
+
+

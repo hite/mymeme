@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table xmlns="http://query.yahooapis.com/v1/schema/table.xsd" https="true">
+  <meta>
+    <sampleQuery>INSERT into {table} (status,username,password) values ("Updating my Twitter status with YQL.", "your_twitter_username_here","your_twitter_password_here")</sampleQuery>
+    <sampleQuery>DELETE from {table} where id="id_of_your_status" and username="your_twitter_username_here" and password="your_twitter_password_here"</sampleQuery>
+    <sampleQuery>SELECT status from {table} username="your_twitter_username_here" and password="your_twitter_password_here"</sampleQuery>
+  </meta>
+  <bindings>
+    <select itemPath="" produces="XML">
+      <urls>
+        <url>http://twitter.com/statuses/user_timeline.xml?screen_name={username}</url>
+      </urls>
+      <inputs>
+        <key id="username" type="xs:string" required="true" paramType="path"/>
+        <key id="password" type="xs:string" required="true" paramType="variable"/>
+      </inputs>
+      <execute><![CDATA[
+      var r = null;
+      if (username && password) {
+         y.include("http://yqlblog.net/samples/base64.js");
+         var authheader = "Basic "+Base64.encode(username+":"+password);
+         r = request.header("Authorization",authheader).get().response;
+      } else {
+         r = request.get().response;
+      }
+      response.object = r;
+      ]]></execute>
+    </select>
+    <insert itemPath="" produces="XML">
+      <urls>
+        <url>http://twitter.com/statuses/update.xml</url>
+      </urls>
+      <inputs>
+        <key id="username" type="xs:string" required="true" paramType="variable"/>
+        <key id="password" type="xs:string" required="true" paramType="variable"/>
+        <value id="status" type="xs:string" required="true" paramType="variable"/>
+      </inputs>
+      <execute><![CDATA[
+      y.include("http://yqlblog.net/samples/base64.js");
+      var authheader = "Basic "+Base64.encode(username+":"+password);
+      var content = "status="+status;
+      response.object =
+request.header("Authorization",authheader).post(content).response;
+      ]]></execute>
+    </insert>
+    <delete itemPath="" produces="XML">
+      <urls>
+        <url>http://twitter.com/statuses/destroy/{id}.xml</url>
+      </urls>
+      <inputs>
+        <key id="username" type="xs:string" required="true" paramType="variable"/>
+        <key id="password" type="xs:string" required="true" paramType="variable"/>
+        <key id="id" type="xs:string" required="true" paramType="path"/>
+      </inputs>
+      <execute><![CDATA[
+      y.include("http://yqlblog.net/samples/base64.js");
+      var authheader = "Basic "+Base64.encode(username+":"+password);
+      response.object =
+request.header("Authorization",authheader).del().response;
+      ]]></execute>
+    </delete>
+  </bindings>
+</table>
+
