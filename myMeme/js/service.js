@@ -221,7 +221,7 @@ var authorCache = new Array();
 
 	    xmlHttp.onreadystatechange = function(){
 			if (xmlHttp.readyState == 4) {//completed
-				if(xmlHttp.status==200 || xmlHttp.status ==0){//success or local OK
+				if(xmlHttp.status==200 || xmlHttp.status == 304){//success or local OK
 					
 					var args ; 
 					if(options.format){
