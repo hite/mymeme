@@ -46,7 +46,7 @@
 			cbFunction:'bombFactory'
 		});
 	  	 queue.push({
-			q:"select * from meme.posts("+curpage*pageSize+","+pageSize+")  where owner_guid in (select guid from meme.info where owner_guid='"+user.guid+"')",
+			q:"select * from meme.posts("+curpage*pageSize+","+pageSize+")  where owner_guid ='"+user.guid+"'",
 			format:'json',
 			cbFunction:'bombFactory'
 		});

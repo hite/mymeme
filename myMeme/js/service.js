@@ -3,7 +3,7 @@
  * @date 2009-12-5 18:45:55
  */
 
-var curpage = 1,pageSize=10;
+var curpage = 0,pageSize=10;
 var authorCache = new Array();
 
 var toDashBoard = function(){
