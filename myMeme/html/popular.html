@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Welcome to mymeme</title>
+		<script src="/mymeme/js/service.js" type="text/javascript"></script>
+		<script src="/mymeme/ext/mootools-1.2.4-core-nc.js" type="text/javascript"></script>
+		<link href="/mymeme/css/meme.css" rel="stylesheet"/>
+	</head>
+	<body>
+		<div class="banner">
+			<h1>第三方meme客户端</h1>
+			<div class="navigator">
+					<a href="popular.html">popular</a>
+					<a href="#home"  onclick="toDashBoard()">home</a>
+					<a href="index.html">myMeme</a>
+			</div>
+		</div>
+		<div class="posts" id="poplurPosts">
+			
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	window.addEvent("load",function(){
+		popularQuery();
+	});
+	var popularQuery = function(){
+	    var user = User();
+		var queue = new Array();
+	  	 queue.push({
+			q:"SELECT * FROM meme.popular WHERE locale='pt'",
+			format:'json',
+			cbFunction:'popularPosts'
+		});
+		
+		$each(queue,function(query){
+			new Ajax(query);	
+		});
+ 	}
+		var popularPosts = function(reply){
+			var posts = reply.query.results.post ;
+			if(posts){
+				if (posts.length > 0) {
+					//meme.post
+					post(posts).inject($("poplurPosts"));
+				}else {
+					alert("no any posts found! type another user again.");
+				}
+			}
+		}
+	
+</script>

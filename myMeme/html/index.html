@@ -8,7 +8,14 @@
 		<link href="/mymeme/css/meme.css" rel="stylesheet"/>
 	</head>
 	<body>
-		<h1>第三方meme客户端</h1>
+		<div class="banner">
+			<h1>第三方meme客户端</h1>
+			<div class="navigator">
+					<a href="popular.html">popular</a>
+					<a href="#home"  onclick="toDashBoard()">home</a>
+					<a href="index.html">myMeme</a>
+			</div>
+		</div>
 		<div style="display:none;">
 			<label>guid</label><span><input type="text" name="guid" id="guid" value="GOVBVW5VM3DPIUWR75JOYO4WZ4"/></span>
 			<label>用户名</label><span><input type="text" name="userName" id="userName" value="hite"/></span>
@@ -30,5 +37,49 @@
 	window.addEvent("load",function(){
 		makeQuery();
 	});
+	var makeQuery = function(){
+	    var user = User();
+		var queue = new Array();
+	  	 queue.push({
+			q:"select * from meme.info where owner_guid='"+user.guid+"'",
+			format:'json',
+			cbFunction:'bombFactory'
+		});
+	  	 queue.push({
+			q:"select * from meme.posts("+curpage*pageSize+","+pageSize+")  where owner_guid in (select guid from meme.info where owner_guid='"+user.guid+"')",
+			format:'json',
+			cbFunction:'bombFactory'
+		});
+		
+		$each(queue,function(query){
+			new Ajax(query);	
+		});
+	 }
 	
+	 var bombFactory = function(reply){
+	 		var data = reply;
+	 		var posts = data.query.results.post;
+	
+		 	var m = data.query.results.meme;
+		 	if (m) {
+	 		//meme.info
+				if (/loading/i.test(document.getElementById("userInfo").innerHTML)) {
+					document.getElementById("userInfo").innerHTML = userInfo(m);
+				}
+			//meme.follower
+			}//else {
+				//alert("no such user found! type another again.");
+			//}
+			
+			var posts = data.query.results.post;
+			if(posts){
+				if (posts.length > 0) {
+					//meme.post
+					post(posts).inject($("posts"));
+				}else {
+					alert("no any posts found! type another user again.");
+				}
+			}
+			
+	 }
 </script>
