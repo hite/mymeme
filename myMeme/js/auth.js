@@ -13,14 +13,14 @@ var getReqToken =function(){
 	url+="&oauth_signature="+consumer_Secret+"%26";  
 	url+="&oauth_version=1.0";
 	url+="&xoauth_lang_pref=en-us";  
-	url+="&oauth_callback=http://www.the631.com/mymeme";
+	//url+="&oauth_callback=http://hite.me/mymeme";
 	
 	var query ={
 			q:url,
 			asyn:true,
 			type:"private",
 			cbFunction:function(reply){
-				alert(reply);
+				alert("The repley is " +reply);
 			}
 		};
 		new Ajax(query); 

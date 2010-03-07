@@ -6,62 +6,21 @@
 var curpage = 1,pageSize=10;
 var authorCache = new Array();
 
+var toDashBoard = function(){
+		var u = User();
+		window.location.assign("home.html?guid="+u.guid);
+}
+
  var morePage =function(){
  	var userName = document.getElementById("userName");
  	curpage++;
- 	var query ={
-		q:"select * from meme.posts("+curpage*pageSize+","+pageSize+") where owner_guid in (select guid from meme.info where name='"+userName.value+"')",
-		format:'json',
-		cbFunction:'bombFactory'
-	}
+	window.location.assign(window.location.href+"#page="+curpage)
+	//myhome posts
+ 	makeQuery();
 	new Ajax(query);	
  }
 
-  var makeQuery = function(){
-    var user = User();
-	var queue = new Array();
-  	 queue.push({
-		q:"select * from meme.info where owner_guid='"+user.guid+"'",
-		format:'json',
-		cbFunction:'bombFactory'
-	});
-  	 queue.push({
-		q:"select * from meme.posts where owner_guid in (select guid from meme.info where owner_guid='"+user.guid+"')",
-		format:'json',
-		cbFunction:'bombFactory'
-	});
-	
-	$each(queue,function(query){
-		new Ajax(query);	
-	});
- }
 
- var bombFactory = function(reply){
- 		var data = reply;
- 		var posts = data.query.results.post;
-
-	 	var m = data.query.results.meme;
-	 	if (m) {
- 		//meme.info
-			if (/loading/i.test(document.getElementById("userInfo").innerHTML)) {
-				document.getElementById("userInfo").innerHTML = userInfo(m);
-			}
-		//meme.follower
-		}//else {
-			//alert("no such user found! type another again.");
-		//}
-		
-		var posts = data.query.results.post;
-		if(posts){
-			if (posts.length > 0) {
-				//meme.post
-				post(posts).inject($("posts"));
-			}else {
-				alert("no any posts found! type another user again.");
-			}
-		}
-		
- }
  var refactoredPost = function(posts){
  	posts.each(function(item){
 		var author_guid = item.guid;
@@ -269,7 +228,7 @@ var authorCache = new Array();
  }
  
  var paramsMap = function(url){
- 	var reg = /^(.)*\?/i;
+ 	var reg =new RegExp("^(.)*\\?","i");
 	var args = url.replace(reg,"").replace(reg.compile("#(.)*$"),"").split("&");
 	
 	var params = new Array();

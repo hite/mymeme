@@ -17,13 +17,29 @@ body {
 	margin-left:80px;
 	margin-right:80px;
 	background-color:#fff;
+	clear:both;
 }
 
 .post{
 	border-bottom:1px solid #E3EBEF;
 	display:block;
-	padding:20px 0;
-	width:790px;
+}
+.posts{
+	clear:both;
+}
+.group-post{
+	padding:20px 40px 0;
 }
 
+.banner h1{
+	display:inline;
+	float:left;
+}
 
+.navigator{
+	float:left;
+	line-height:80px;
+	padding-left:50px;
+	text-align:left;
+	vertical-align:bottom;
+}
