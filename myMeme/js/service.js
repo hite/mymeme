@@ -12,12 +12,9 @@ var toDashBoard = function(){
 }
 
  var morePage =function(){
- 	var userName = document.getElementById("userName");
  	curpage++;
 	window.location.assign(window.location.href+"#page="+curpage)
 	//myhome posts
- 	makeQuery();
-	new Ajax(query);	
  }
 
 
