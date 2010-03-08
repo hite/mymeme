@@ -13,13 +13,14 @@
 			<div class="navigator">
 					<a href="popular.html">popular</a>
 					<a href="#home"  onclick="toDashBoard()">home</a>
-					<a href="index.html">myMeme</a>
+					<a href="#index" onclick="toUserHome();">myMeme</a>
 			</div>
 		</div>
-		<div style="display:none;">
-			<label>guid</label><span><input type="text" name="guid" id="guid" value="GOVBVW5VM3DPIUWR75JOYO4WZ4"/></span>
+		<div class="guid-userName">
+			<label>如果你记得你的用户名的话可以输入点击“更换用户":
+			<label>Guid</label><span><input type="text" name="guid" id="guid" value="GOVBVW5VM3DPIUWR75JOYO4WZ4"  style="width: 300px;"/></span>
 			<label>用户名</label><span><input type="text" name="userName" id="userName" value="hite"/></span>
-			<label>密码</label><span><input type="password" name="password" value="*****"/></span>
+			<span><input type="button" name="更换用户" value="更换用户" onclick="changeUser();"/></span>
 		</div>
 		<div id="userInfo">
 			loading......
@@ -33,10 +34,39 @@
 		</div>
 	</body>
 </html>
+
+<script type="text/javascript" src="http://js.tongji.linezing.com/1505923/tongji.js"></script>
 <script type="text/javascript">
 	window.addEvent("load",function(){
+		var un = paramsMap(window.location.search)["userName"];
+		var g = paramsMap(window.location.search)["guid"];
+		if(un){
+			$("userName").value = un;
+		}
+		if(g){
+			$("guid").value = g;
+		}
+		
 		makeQuery();
 	});
+	function changeUser(){
+		var un = $("userName").value ;
+		var query = {
+			q:"SELECT * FROM meme.info WHERE  name = '"+un+"'",
+			format:'json',
+			asyn:false,
+			cbFunction:function(data){
+				var m = data.query.results.meme;
+				if(m.guid){
+					$("guid").value = m.guid ;
+				}else{
+					alert("No such User in Yahoo Meme!");
+				}
+			}
+		};
+		
+		new Ajax(query);	
+	}
 	var makeQuery = function(){
 	    var user = User();
 		var queue = new Array();

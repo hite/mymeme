@@ -21,7 +21,7 @@ body {
 }
 
 .post{
-	border-bottom:1px solid #E3EBEF;
+	border-bottom:10px solid #E3EBEF;
 	display:block;
 }
 .posts{
@@ -42,4 +42,31 @@ body {
 	padding-left:50px;
 	text-align:left;
 	vertical-align:bottom;
+}
+.guid-userName{
+	clear:both;
+	background-color:#FFFFFF;
+}
+.post-info .post-date{
+	-moz-border-radius-bottomleft:8px;
+	-moz-border-radius-bottomright:8px;
+	-moz-border-radius-topleft:8px;
+	-moz-border-radius-topright:8px;
+	color:#fff;
+	font-weight:bold;
+	float:right;
+	margin-right:10px;
+	background-color:#FF00FF;
+}
+.post-info label{
+	display:block;
+	color:#FF0066;
+	margin-right:10px;
+}
+.post-info a , .post-info span{
+	margin-right:10px;
+}
+.post-info .conmments{
+	margin-right:10px;
+	background-color:#f88815;
 }

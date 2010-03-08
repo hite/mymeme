@@ -6,6 +6,11 @@
 var curpage = 0,pageSize=10;
 var authorCache = new Array();
 
+var toUserHome = function(){
+	var u = User();
+	window.location.assign("index.html?guid="+u.guid+"&userName="+u.userName);
+}
+
 var toDashBoard = function(){
 		var u = User();
 		window.location.assign("home.html?guid="+u.guid);
@@ -21,7 +26,7 @@ var toDashBoard = function(){
  var refactoredPost = function(posts){
  	posts.each(function(item){
 		var author_guid = item.guid;
-		//check Cache
+		//user check Cache
 		if(authorCache[author_guid]){
 			var m =authorCache[author_guid];
 			item.author_name = m.name;
@@ -45,6 +50,7 @@ var toDashBoard = function(){
 			};
 			new Ajax(query);
 		}
+		//post
 	});
 	return posts;
  }
@@ -86,6 +92,31 @@ var toDashBoard = function(){
 				}).inject(content_div);
 			}
 			content_div.inject(div);
+			
+			//post info
+			var post_info = new Element("div", {class: "post-info"});
+			new Element("label",{
+				class:"post-date",
+				html:"repost="+item.repost_count
+			}).inject(post_info);
+			new Element("label",{
+				html:new Date(parseInt(item.timestamp))
+			}).inject(post_info);
+			new Element("a",{
+				html:"via :"+item.via_guid,
+				href:"index.html?guid="+item.via_guid,
+				target:"_blank"
+			}).inject(post_info);
+			new Element("a",{
+				html:"origin :"+item.origin_guid,
+				href:"index.html?guid="+item.origin_guid,
+				target:"_blank"
+			}).inject(post_info);
+			new Element("span",{
+				class:"conmments",
+				html:"conmments :"+item.comment
+			}).inject(post_info);
+			post_info.inject(div);
 			
 			div.inject(inner);
 		});
@@ -237,17 +268,19 @@ var toDashBoard = function(){
 	});
 	return params;
  } 
- 
+ /**
+  * URL的优先级小于 表单的数据
+  */
  var User =  function(){
  	var u ={};
 	var userName = $("userName")?document.getElementById("userName").value:null;
-	if (paramsMap(window.location.search)["userName"]) {
+	if (userName==null && paramsMap(window.location.search)["userName"]) {
 		userName = paramsMap(window.location.search)["userName"];
 	}
 	u.userName = userName;
 	
     var guid = $("guid")?document.getElementById("guid").value:null;
-	if (paramsMap(window.location.search)["guid"]) {
+	if (guid==null && paramsMap(window.location.search)["guid"]) {
 		guid = paramsMap(window.location.search)["guid"];
 	}
 	u.guid = guid ;
