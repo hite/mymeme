@@ -102,20 +102,26 @@ var toDashBoard = function(){
 			new Element("label",{
 				html:new Date(parseInt(item.timestamp))
 			}).inject(post_info);
-			new Element("a",{
-				html:"via :"+item.via_guid,
-				href:"index.html?guid="+item.via_guid,
-				target:"_blank"
-			}).inject(post_info);
-			new Element("a",{
-				html:"origin :"+item.origin_guid,
-				href:"index.html?guid="+item.origin_guid,
-				target:"_blank"
-			}).inject(post_info);
-			new Element("span",{
-				class:"conmments",
-				html:"conmments :"+item.comment
-			}).inject(post_info);
+			if(item.via_guid){
+				new Element("a",{
+					html:"via :"+item.via_guid,
+					href:"index.html?guid="+item.via_guid,
+					target:"_blank"
+				}).inject(post_info);
+			}
+			if(item.origin_guid){
+				new Element("a",{
+					html:"origin :"+item.origin_guid,
+					href:"index.html?guid="+item.origin_guid,
+					target:"_blank"
+				}).inject(post_info);
+			}
+			if(item.comment){
+				new Element("span",{
+					class:"conmments",
+					html:"conmments :"+item.comment
+				}).inject(post_info);
+			}
 			post_info.inject(div);
 			
 			div.inject(inner);
