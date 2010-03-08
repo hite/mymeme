@@ -52,7 +52,7 @@ body {
 	-moz-border-radius-bottomright:8px;
 	-moz-border-radius-topleft:8px;
 	-moz-border-radius-topright:8px;
-	color:#fff;
+	color:#fff;#ff00ff;
 	font-weight:bold;
 	float:right;
 	margin-right:10px;
@@ -68,5 +68,5 @@ body {
 }
 .post-info .conmments{
 	margin-right:10px;
-	background-color:#f88815;
+	background-color:#0080ff;
 }
