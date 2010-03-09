@@ -142,6 +142,7 @@ var toDashBoard = function(){
 			});
 		var inf = new Element("div");
 		inf.setStyle("float","left");
+		$("userName").value = m.name;
 		
 		new Element("p",{html:m.name}).inject(inf);
 		new Element("p",{html:m.description}).inject(inf);
